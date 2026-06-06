@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodSoft Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <img
+            src="cs.jpg"
+            alt="CodSoft Logo"
+            class="logo"
+        >
+
+        <div class="header-text">
+            <h1>CodSoft Calculator</h1>
+            <p>Web Development Internship Project</p>
+            <p>Coded by: Mohammed Shafiq A</p>
+
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="calculator-container">
+
+        <!-- Calculator Section -->
+        <section
+            class="calculator"
+            aria-label="Calculator"
+        >
+
+            <!-- Display -->
+            <div class="display-container">
+
+                <div
+                    id="display"
+                    class="display"
+                    aria-live="polite"
+                >
+                    0
+                </div>
+
+            </div>
+
+            <!-- Calculator Buttons -->
+            <div class="buttons">
+
+                <!-- Row 1 -->
+                <button
+                    class="btn function"
+                    data-value="C"
+                    aria-label="Clear"
+                >
+                    C
+                </button>
+
+                <button
+                    class="btn function"
+                    data-value="⌫"
+                    aria-label="Delete"
+                >
+                    ⌫
+                </button>
+
+                <button
+                    class="btn operator"
+                    data-value="%"
+                    aria-label="Percentage"
+                >
+                    %
+                </button>
+
+                <button
+                    class="btn operator"
+                    data-value="/"
+                    aria-label="Divide"
+                >
+                    ÷
+                </button>
+
+                <!-- Row 2 -->
+                <button class="btn number" data-value="7">7</button>
+                <button class="btn number" data-value="8">8</button>
+                <button class="btn number" data-value="9">9</button>
+
+                <button
+                    class="btn operator"
+                    data-value="*"
+                    aria-label="Multiply"
+                >
+                    ×
+                </button>
+
+                <!-- Row 3 -->
+                <button class="btn number" data-value="4">4</button>
+                <button class="btn number" data-value="5">5</button>
+                <button class="btn number" data-value="6">6</button>
+
+                <button
+                    class="btn operator"
+                    data-value="-"
+                    aria-label="Subtract"
+                >
+                    −
+                </button>
+
+                <!-- Row 4 -->
+                <button class="btn number" data-value="1">1</button>
+                <button class="btn number" data-value="2">2</button>
+                <button class="btn number" data-value="3">3</button>
+
+                <button
+                    class="btn operator"
+                    data-value="+"
+                    aria-label="Add"
+                >
+                    +
+                </button>
+
+                <!-- Row 5 -->
+                <button
+                    class="btn number zero"
+                    data-value="0"
+                >
+                    0
+                </button>
+
+                <button
+                    class="btn number"
+                    data-value="."
+                    aria-label="Decimal"
+                >
+                    .
+                </button>
+
+                <button
+                    class="btn equal"
+                    data-value="="
+                    aria-label="Equals"
+                >
+                    =
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- History Panel -->
+        <aside
+            class="history-section"
+            aria-label="Calculation History"
+        >
+
+            <div class="history-header">
+                <h2>📜 Calculation History</h2>
+                <span>Last 10</span>
+            </div>
+
+            <ul id="historyList">
+                <!-- History items added dynamically -->
+            </ul>
+
+        </aside>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
