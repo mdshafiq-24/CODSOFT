@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodSoft Calculator</title>
+   <style>/* ===================================
+   GOOGLE FONT
+=================================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ===================================
+   GLOBAL STYLES
+=================================== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #111827,
+        #1e293b
+    );
+
+    min-height:100vh;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    color:white;
+
+    padding:40px 20px;
+
+    overflow-x:hidden;
+
+    animation:fadeIn 0.8s ease;
+}
+
+/* ===================================
+   HEADER
+=================================== */
+.app-header{
+    display:flex;
+    align-items:center;
+    gap:18px;
+
+    margin-bottom:35px;
+
+    animation:slideDown 0.8s ease;
+}
+
+.logo{
+    width:75px;
+    height:75px;
+
+    border-radius:50%;
+
+    background:white;
+
+    padding:8px;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.25);
+}
+
+.header-text h1{
+    font-size:2.3rem;
+    font-weight:700;
+    color:#ffffff;
+}
+
+.header-text p{
+    color:#94a3b8;
+    font-size:0.95rem;
+    letter-spacing:0.5px;
+}
+
+/* ===================================
+   MAIN LAYOUT
+=================================== */
+.calculator-container{
+    display:flex;
+    gap:30px;
+    align-items:flex-start;
+    justify-content:center;
+
+    width:100%;
+    max-width:1150px;
+}
+
+/* ===================================
+   CALCULATOR
+=================================== */
+.calculator{
+    background:rgba(30,41,59,0.95);
+
+    backdrop-filter:blur(12px);
+
+    border-radius:28px;
+
+    padding:25px;
+
+    width:420px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 25px 50px rgba(0,0,0,.35);
+
+    transition:.3s;
+
+    position:relative;
+    overflow:hidden;
+}
+
+.calculator:hover{
+    transform:translateY(-5px);
+}
+
+/* Premium Shine Effect */
+.calculator::before{
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:100%;
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.05),
+        transparent
+    );
+
+    transition:1s;
+}
+
+.calculator:hover::before{
+    left:100%;
+}
+
+/* ===================================
+   DISPLAY
+=================================== */
+.display-container{
+    margin-bottom:22px;
+}
+
+.display{
+    background:#0b1120;
+
+    color:white;
+
+    min-height:95px;
+
+    border-radius:18px;
+
+    padding:20px;
+
+    text-align:right;
+
+    font-size:2.2rem;
+    font-weight:600;
+
+    display:flex;
+    justify-content:flex-end;
+    align-items:center;
+
+    overflow-x:auto;
+    overflow-y:hidden;
+
+    white-space:nowrap;
+
+    border:1px solid rgba(255,255,255,.05);
+
+    box-shadow:
+        inset 0 0 12px rgba(0,0,0,.4);
+}
+
+/* ===================================
+   BUTTON GRID
+=================================== */
+.buttons{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+}
+
+/* ===================================
+   BUTTONS
+=================================== */
+.btn,
+.equal{
+    height:68px;
+
+    border:none;
+
+    border-radius:18px;
+
+    cursor:pointer;
+
+    font-size:1.2rem;
+    font-weight:600;
+
+    transition:.25s ease;
+
+    user-select:none;
+}
+
+/* Number Buttons */
+.number{
+    background:#334155;
+    color:white;
+}
+
+.number:hover{
+    background:#475569;
+    transform:translateY(-3px);
+}
+
+/* Operator Buttons */
+.operator{
+    background:#f97316;
+    color:white;
+}
+
+.operator:hover{
+    background:#ea580c;
+    transform:translateY(-3px);
+}
+
+/* Function Buttons */
+.function{
+    background:#64748b;
+    color:white;
+}
+
+.function:hover{
+    background:#475569;
+    transform:translateY(-3px);
+}
+
+/* Equal Button */
+.equal{
+    background:#22c55e;
+    color:white;
+}
+
+.equal:hover{
+    background:#16a34a;
+    transform:translateY(-3px);
+}
+
+/* Button Click Animation */
+.btn:active,
+.equal:active{
+    transform:scale(.94);
+}
+
+/* Zero Button */
+.zero{
+    grid-column:span 2;
+}
+
+/* ===================================
+   HISTORY PANEL
+=================================== */
+.history-section{
+    width:340px;
+
+    min-height:585px;
+
+    background:rgba(30,41,59,.95);
+
+    backdrop-filter:blur(12px);
+
+    border-radius:28px;
+
+    padding:22px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 25px 50px rgba(0,0,0,.35);
+
+    display:flex;
+    flex-direction:column;
+}
+
+.history-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding-bottom:15px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,.08);
+
+    margin-bottom:18px;
+}
+
+.history-header h2{
+    font-size:1.1rem;
+    font-weight:600;
+}
+
+.history-header span{
+    background:#334155;
+
+    padding:6px 12px;
+
+    border-radius:20px;
+
+    font-size:.8rem;
+
+    color:#cbd5e1;
+}
+
+/* ===================================
+   HISTORY ITEMS
+=================================== */
+#historyList{
+    list-style:none;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:12px;
+
+    overflow-y:auto;
+
+    flex:1;
+}
+
+#historyList li{
+    background:#0b1120;
+
+    border-left:4px solid #22c55e;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    transition:.3s;
+
+    word-break:break-word;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,.2);
+}
+
+#historyList li:hover{
+    transform:translateX(6px);
+    background:#111827;
+}
+
+#historyList strong{
+    display:block;
+    color:#f8fafc;
+    font-size:0.95rem;
+}
+
+#historyList span{
+    color:#22c55e;
+    font-weight:600;
+}
+
+/* ===================================
+   CUSTOM SCROLLBAR
+=================================== */
+::-webkit-scrollbar{
+    width:7px;
+}
+
+::-webkit-scrollbar-track{
+    background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#475569;
+    border-radius:10px;
+}
+
+/* ===================================
+   ANIMATIONS
+=================================== */
+@keyframes fadeIn{
+    from{
+        opacity:0;
+    }
+    to{
+        opacity:1;
+    }
+}
+
+@keyframes slideDown{
+    from{
+        opacity:0;
+        transform:translateY(-30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ===================================
+   TABLET VIEW
+=================================== */
+@media(max-width:1024px){
+
+    .calculator-container{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .history-section{
+        width:100%;
+        max-width:420px;
+        min-height:auto;
+    }
+}
+
+/* ===================================
+   MOBILE VIEW
+=================================== */
+@media(max-width:600px){
+
+    body{
+        padding:20px;
+    }
+
+    .app-header{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .logo{
+        width:65px;
+        height:65px;
+    }
+
+    .header-text h1{
+        font-size:1.8rem;
+    }
+
+    .header-text p{
+        font-size:0.85rem;
+    }
+
+    .calculator{
+        width:100%;
+        padding:18px;
+    }
+
+    .display{
+        font-size:1.7rem;
+        min-height:80px;
+    }
+
+    .btn,
+    .equal{
+        height:58px;
+        font-size:1rem;
+    }
+
+    .history-section{
+        width:100%;
+    }
+}</style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <img
+            src="cs.jpg"
+            alt="CodSoft Logo"
+            class="logo"
+        >
+
+        <div class="header-text">
+            <h1>CodSoft Calculator</h1>
+            <p>Web Development Internship Project</p>
+            <p>Coded by: Mohammed Shafiq A</p>
+
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <main class="calculator-container">
+
+        <!-- Calculator Section -->
+        <section
+            class="calculator"
+            aria-label="Calculator"
+        >
+
+            <!-- Display -->
+            <div class="display-container">
+
+                <div
+                    id="display"
+                    class="display"
+                    aria-live="polite"
+                >
+                    0
+                </div>
+
+            </div>
+
+            <!-- Calculator Buttons -->
+            <div class="buttons">
+
+                <!-- Row 1 -->
+                <button
+                    class="btn function"
+                    data-value="C"
+                    aria-label="Clear"
+                >
+                    C
+                </button>
+
+                <button
+                    class="btn function"
+                    data-value="⌫"
+                    aria-label="Delete"
+                >
+                    ⌫
+                </button>
+
+                <button
+                    class="btn operator"
+                    data-value="%"
+                    aria-label="Percentage"
+                >
+                    %
+                </button>
+
+                <button
+                    class="btn operator"
+                    data-value="/"
+                    aria-label="Divide"
+                >
+                    ÷
+                </button>
+
+                <!-- Row 2 -->
+                <button class="btn number" data-value="7">7</button>
+                <button class="btn number" data-value="8">8</button>
+                <button class="btn number" data-value="9">9</button>
+
+                <button
+                    class="btn operator"
+                    data-value="*"
+                    aria-label="Multiply"
+                >
+                    ×
+                </button>
+
+                <!-- Row 3 -->
+                <button class="btn number" data-value="4">4</button>
+                <button class="btn number" data-value="5">5</button>
+                <button class="btn number" data-value="6">6</button>
+
+                <button
+                    class="btn operator"
+                    data-value="-"
+                    aria-label="Subtract"
+                >
+                    −
+                </button>
+
+                <!-- Row 4 -->
+                <button class="btn number" data-value="1">1</button>
+                <button class="btn number" data-value="2">2</button>
+                <button class="btn number" data-value="3">3</button>
+
+                <button
+                    class="btn operator"
+                    data-value="+"
+                    aria-label="Add"
+                >
+                    +
+                </button>
+
+                <!-- Row 5 -->
+                <button
+                    class="btn number zero"
+                    data-value="0"
+                >
+                    0
+                </button>
+
+                <button
+                    class="btn number"
+                    data-value="."
+                    aria-label="Decimal"
+                >
+                    .
+                </button>
+
+                <button
+                    class="btn equal"
+                    data-value="="
+                    aria-label="Equals"
+                >
+                    =
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- History Panel -->
+        <aside
+            class="history-section"
+            aria-label="Calculation History"
+        >
+
+            <div class="history-header">
+                <h2>📜 Calculation History</h2>
+                <span>Last 10</span>
+            </div>
+
+            <ul id="historyList">
+                <!-- History items added dynamically -->
+            </ul>
+
+        </aside>
+
+    </main>
+
+    <script>
+        /* ==================================================
+   CodSoft Calculator
+   Professional Internship Project
+   Author: Your Name
+================================================== */
+
+// ======================================
+// DOM ELEMENTS
+// ======================================
+
+const display = document.getElementById("display");
+const historyList = document.getElementById("historyList");
+
+const buttons = document.querySelectorAll(".btn, .equal");
+
+// ======================================
+// VARIABLES
+// ======================================
+
+let currentInput = "";
+let history = [];
+
+const MAX_HISTORY = 10;
+
+// ======================================
+// DISPLAY FUNCTIONS
+// ======================================
+
+function updateDisplay(value) {
+    display.textContent = value || "0";
+}
+
+// ======================================
+// UTILITY FUNCTIONS
+// ======================================
+
+function isOperator(char) {
+    return ["+", "-", "*", "/", "%"].includes(char);
+}
+
+function getLastNumber() {
+    const parts = currentInput.split(/[+\-*/%]/);
+    return parts[parts.length - 1];
+}
+
+// ======================================
+// DECIMAL VALIDATION
+// ======================================
+
+function canAddDecimal() {
+    const lastNumber = getLastNumber();
+    return !lastNumber.includes(".");
+}
+
+// ======================================
+// HISTORY FUNCTIONS
+// ======================================
+
+function addToHistory(expression, result) {
+
+    const historyRecord = `
+        <strong>${expression}</strong>
+        <span>= ${result}</span>
+    `;
+
+    history.unshift(historyRecord);
+
+    if (history.length > MAX_HISTORY) {
+        history.pop();
+    }
+
+    renderHistory();
+}
+
+function renderHistory() {
+
+    historyList.innerHTML = "";
+
+    history.forEach(item => {
+
+        const li = document.createElement("li");
+
+        li.innerHTML = item;
+
+        historyList.appendChild(li);
+    });
+}
+
+// ======================================
+// CLEAR DISPLAY
+// ======================================
+
+function clearDisplay() {
+    currentInput = "";
+    updateDisplay("0");
+}
+
+// ======================================
+// DELETE LAST CHARACTER
+// ======================================
+
+function deleteLastCharacter() {
+
+    currentInput = currentInput.slice(0, -1);
+
+    updateDisplay(currentInput);
+}
+
+// ======================================
+// APPEND INPUT
+// ======================================
+
+function appendValue(value) {
+
+    // Prevent multiple decimals
+    if (value === ".") {
+
+        if (!canAddDecimal()) {
+            return;
+        }
+    }
+
+    const lastChar = currentInput.slice(-1);
+
+    // Replace repeated operators
+    if (
+        isOperator(lastChar) &&
+        isOperator(value)
+    ) {
+
+        currentInput =
+            currentInput.slice(0, -1) + value;
+
+        updateDisplay(currentInput);
+
+        return;
+    }
+
+    currentInput += value;
+
+    updateDisplay(currentInput);
+}
+
+// ======================================
+// DIVISION BY ZERO CHECK
+// ======================================
+
+function hasDivisionByZero(expression) {
+
+    return /\/0(?!\.)/.test(expression);
+}
+
+// ======================================
+// CALCULATE RESULT
+// ======================================
+
+function calculateResult() {
+
+    try {
+
+        if (!currentInput) return;
+
+        // Remove ending operator
+        if (
+            isOperator(
+                currentInput[currentInput.length - 1]
+            )
+        ) {
+
+            currentInput =
+                currentInput.slice(0, -1);
+        }
+
+        if (!currentInput) {
+            updateDisplay("0");
+            return;
+        }
+
+        // Division by zero
+        if (
+            hasDivisionByZero(currentInput)
+        ) {
+
+            throw new Error(
+                "Cannot divide by zero"
+            );
+        }
+
+        // Convert percentage
+        let expression =
+            currentInput.replace(
+                /(\d+)%/g,
+                "($1/100)"
+            );
+
+        let result = eval(expression);
+
+        if (
+            result === Infinity ||
+            result === -Infinity
+        ) {
+
+            throw new Error(
+                "Cannot divide by zero"
+            );
+        }
+
+        if (Number.isNaN(result)) {
+
+            throw new Error(
+                "Invalid Expression"
+            );
+        }
+
+        // Limit long decimals
+        if (
+            typeof result === "number"
+        ) {
+
+            result =
+                parseFloat(
+                    result.toFixed(10)
+                );
+        }
+
+        addToHistory(
+            currentInput,
+            result
+        );
+
+        currentInput =
+            result.toString();
+
+        updateDisplay(currentInput);
+
+    } catch (error) {
+
+        updateDisplay(
+            error.message ||
+            "Invalid Expression"
+        );
+
+        currentInput = "";
+    }
+}
+
+// ======================================
+// BUTTON CLICK EVENTS
+// ======================================
+
+buttons.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            const value =
+                button.dataset.value;
+
+            switch (value) {
+
+                case "C":
+                    clearDisplay();
+                    break;
+
+                case "⌫":
+                    deleteLastCharacter();
+                    break;
+
+                case "=":
+                    calculateResult();
+                    break;
+
+                default:
+                    appendValue(value);
+            }
+        }
+    );
+});
+
+// ======================================
+// KEYBOARD SUPPORT
+// ======================================
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        const key = event.key;
+
+        // Numbers
+        if (
+            /^[0-9]$/.test(key)
+        ) {
+
+            appendValue(key);
+            return;
+        }
+
+        // Operators
+        if (
+            ["+", "-", "*", "/", "%"]
+            .includes(key)
+        ) {
+
+            appendValue(key);
+            return;
+        }
+
+        // Decimal
+        if (key === ".") {
+
+            appendValue(".");
+            return;
+        }
+
+        // Enter
+        if (key === "Enter") {
+
+            event.preventDefault();
+
+            calculateResult();
+
+            return;
+        }
+
+        // Backspace
+        if (key === "Backspace") {
+
+            deleteLastCharacter();
+
+            return;
+        }
+
+        // Delete
+        if (key === "Delete") {
+
+            clearDisplay();
+
+            return;
+        }
+
+        // Escape
+        if (key === "Escape") {
+
+            clearDisplay();
+
+            return;
+        }
+    }
+);
+
+// ======================================
+// HISTORY CLICK TO REUSE CALCULATION
+// ======================================
+
+historyList.addEventListener(
+    "click",
+    function (event) {
+
+        const clickedItem =
+            event.target.closest("li");
+
+        if (!clickedItem) return;
+
+        const expression =
+            clickedItem
+                .querySelector("strong")
+                .textContent;
+
+        currentInput = expression;
+
+        updateDisplay(currentInput);
+    }
+);
+
+// ======================================
+// STARTUP ANIMATION
+// ======================================
+
+window.addEventListener(
+    "load",
+    () => {
+
+        display.style.opacity = "0";
+
+        setTimeout(() => {
+
+            display.style.transition =
+                "0.5s ease";
+
+            display.style.opacity = "1";
+
+        }, 100);
+    }
+);
+
+// ======================================
+// INITIAL DISPLAY
+// ======================================
+
+updateDisplay("0");
+    </script>
+
+</body>
+</html>
